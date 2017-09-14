@@ -3,6 +3,13 @@ import FileManager from './components/file_manager'
 // use SaveManager to persist data?
 // instantiating this causes my sortable from firing
 // window.fm = new FileManager();
+var manifest = {}
+var img_collection = []
+var selected = []
+
+// $( document ).on( "foo", function( event ) {
+//   console.log(event)
+// });
 
 $('#sidebar').affix({
   offset: {
@@ -22,32 +29,52 @@ $.widget( "figgy.filemanager", {
     _create: function() {
 
         this.element.addClass( "filemanager" );
+
+        this.request = jQuery.ajax({
+          url: this.options.endpoint + this.options.manifestUri,
+          dataType: 'json',
+          async: true
+        });
+
         var _this = this;
+        this.request.done(function(jsonLd) {
 
-          this.request = jQuery.ajax({
-            url: this.options.endpoint + this.options.manifestUri,
-            dataType: 'json',
-            async: true
-          });
+          function paintPages(element, index, array){
+              $( "<div id='" + index + "' class='thumbnail'></div>" )
+              .appendTo( "#sortable" )
+              .html( "<img id='" + element["@id"] + "' src='" +
+                    element.images[0].resource["@id"] +
+                    "'><div class='caption'>" + element.label + "</div>" );
+              img_collection.push({
+                'id': element["@id"],
+                'label': element.label,
+                'isThumb': null,
+                'isStart': null,
+                'selected': false
+              })
+          }
 
-          this.request.done(function(jsonLd) {
+          _this.options.jsonLd = jsonLd;
 
-             function paintPages(element, index, array){
-                $( "<div id='" + index + "' class='thumbnail'></div>" )
-                .appendTo( "#sortable" )
-                .html( "<img src='" +
-                      element.images[0].resource["@id"] +
-                      "'><div class='caption'>" + element.label + "</div>" );
-                }
+          // use global object or SaveManager here
+          // rather than persisting data to DOM to allow for data binding
+          manifest = _this.options.jsonLd
+          $( "body" ).data( "figgy-filemanager-jsonLd", _this.options.jsonLd );
+          $( "#title" ).text( _this.options.jsonLd.label );
+          _this.options.jsonLd.sequences[0].canvases.forEach(paintPages);
+        });
 
-            _this.options.jsonLd = jsonLd;
+        // add event handlers
+        this._on(this.document, {
+  				'click.thumbnail': function(event) {
 
-            // use global object or SaveManager here
-            // rather than persisting data to DOM to allow for data binding
-            $( "body" ).data( "figgy-filemanager-jsonLd", _this.options.jsonLd );
-            $( "#title" ).text( _this.options.jsonLd.label );
-            _this.options.jsonLd.sequences[0].canvases.forEach(paintPages);
-          });
+            this._trigger( "selectPage", event, {
+              // do a lookup on img_collection based on id and pass the
+              // whole thing to selected
+              id: event.target.id
+            });
+  				}
+  			});
     },
     _setOption: function( key, value ) {
         this._super( key, value );
@@ -63,6 +90,7 @@ $.widget( "figgy.filemanager", {
 
         // use global object or SaveManager here
         // rather than persisting data to DOM to allow for data binding
+        manifest = this.options.jsonLd
         $( "body" ).data( "figgy-filemanager-jsonLd", this.options.jsonLd );
         $( "#notice" ).text( "Updated!" );
         $( "#notice" ).show().fadeOut( 2600, "swing" );
@@ -116,7 +144,6 @@ $(function() {
   $( "#sortable" ).sortable({
     update: function(event, ui) {
         var jsonLd = $( "body" ).data( "figgy-filemanager-jsonLd");
-        console.log(jsonLd)
         var new_canvasArr = [];
         var sortedIDs = $( "#sortable" ).sortable( "toArray" );
         var arrayLength = sortedIDs.length;
@@ -127,6 +154,13 @@ $(function() {
         folder.option( "jsonLd", jsonLd);
         //update the folder with the new sort order
         folder.save();
+        console.log(img_collection)
     }
   });
 });
+
+var handleSelectPage = function(event) {
+    console.log(event);
+};
+
+$( document ).filemanager({selectPage : handleSelectPage});
