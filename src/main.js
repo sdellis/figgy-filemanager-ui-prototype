@@ -1,9 +1,8 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import FileManager from './components/file_manager'
 
 // use SaveManager to persist data?
-var fm = new FileManager();
+// instantiating this causes my sortable from firing
+// window.fm = new FileManager();
 
 $('#sidebar').affix({
   offset: {
@@ -11,10 +10,7 @@ $('#sidebar').affix({
   }
 });
 
-var $body   = $(document.body);
 var navHeight = $('.navbar').outerHeight(true) + 10;
-
-var jsonLd = {}
 
 $.widget( "figgy.filemanager", {
     options: {
@@ -52,28 +48,27 @@ $.widget( "figgy.filemanager", {
             $( "#title" ).text( _this.options.jsonLd.label );
             _this.options.jsonLd.sequences[0].canvases.forEach(paintPages);
           });
-        this.refresh();
     },
     _setOption: function( key, value ) {
         this._super( key, value );
     },
     _setOptions: function( options ) {
         this._super( options );
-        this.refresh();
     },
     reset: function() {
-      // this._setOption( "value", 0 );
+      this._destroy();
       this._create();
     },
     save: function() {
-        jsonLd = this.options.jsonLd;
+
         // use global object or SaveManager here
         // rather than persisting data to DOM to allow for data binding
         $( "body" ).data( "figgy-filemanager-jsonLd", this.options.jsonLd );
         $( "#notice" ).text( "Updated!" );
         $( "#notice" ).show().fadeOut( 2600, "swing" );
 
-        //  This will save it to a server when we're ready
+        //  This will save it to a server if we want
+        //  or it can save as a js object and delegate persistence
         //
         // payload = JSON.stringify( this.options.jsonLd );
         // $.ajax(
@@ -97,10 +92,6 @@ $.widget( "figgy.filemanager", {
         //     });
 
     },
-    refresh: function() {
-        // this.options.jsonLd = $( "body" ).data( "figgy-filemanager-jsonLd");
-        // this._create();
-    },
     _destroy: function() {
         this.element
             .removeClass( "filemanager" )
@@ -108,32 +99,34 @@ $.widget( "figgy.filemanager", {
     }
 });
 
-// draw plugin to dom >>>
-var folder = $( "<div></div>" )
-    .appendTo( "body" )
-    .filemanager({
-        endpoint: "https://hydra-dev.princeton.edu/concern/ephemera_folders/",
-        manifestUri: "feddf9b7-0935-448a-91d6-eb3ce933bcb5/manifest",
-        complete: function( event, data ) {
-            $( "#notice" ).text( "Complete!" );
-            $( "#notice" ).show().fadeOut( 2600, "swing" );
-        }
-    })
-    .data( "figgy-filemanager" );
+$(function() {
+  // draw plugin to dom >>>
+  var folder = $( "<div></div>" )
+      .appendTo( "body" )
+      .filemanager({
+          endpoint: "https://hydra-dev.princeton.edu/concern/ephemera_folders/",
+          manifestUri: "feddf9b7-0935-448a-91d6-eb3ce933bcb5/manifest",
+          complete: function( event, data ) {
+              $( "#notice" ).text( "Complete!" );
+              $( "#notice" ).show().fadeOut( 2600, "swing" );
+          }
+      })
+      .data( "figgy-filemanager" );
 
-$( "#sortable" ).sortable({
-  update: function(event, ui) {
-      var jsonLd = $( "body" ).data( "figgy-filemanager-jsonLd");
-      console.log(jsonLd)
-      var new_canvasArr = [];
-      var sortedIDs = $( "#sortable" ).sortable( "toArray" );
-      var arrayLength = sortedIDs.length;
-      for (var i = 0; i < arrayLength; i++) {
-            new_canvasArr[i] = jsonLd.sequences[0].canvases[sortedIDs[i]];
-      }
-      jsonLd.sequences[0].canvases = new_canvasArr;
-      folder.option( "jsonLd", jsonLd);
-      //update the folder with the new sort order
-      folder.save();
-  }
+  $( "#sortable" ).sortable({
+    update: function(event, ui) {
+        var jsonLd = $( "body" ).data( "figgy-filemanager-jsonLd");
+        console.log(jsonLd)
+        var new_canvasArr = [];
+        var sortedIDs = $( "#sortable" ).sortable( "toArray" );
+        var arrayLength = sortedIDs.length;
+        for (var i = 0; i < arrayLength; i++) {
+              new_canvasArr[i] = jsonLd.sequences[0].canvases[sortedIDs[i]];
+        }
+        jsonLd.sequences[0].canvases = new_canvasArr;
+        folder.option( "jsonLd", jsonLd);
+        //update the folder with the new sort order
+        folder.save();
+    }
+  });
 });
