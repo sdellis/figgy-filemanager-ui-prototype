@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>figgy-es6</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <style>
+        body {
+         padding-top:50px;
+        }
+
+        #masthead h1 {
+         font-size: 30px;
+         line-height: 1;
+         padding-top:20px;
+        }
+
+        #masthead .well {
+         margin-top:8%;
+        }
+
+        @media screen and (min-width: 768px) {
+          #masthead h1 {
+            font-size: 50px;
+          }
+        }
+
+        .affix-top,.affix{
+         position: static;
+        }
+
+        @media (min-width: 979px) {
+          #sidebar.affix-top {
+            position: static;
+          	margin-top:30px;
+          	width:228px;
+          }
+
+          #sidebar.affix {
+            position: fixed;
+            top:70px;
+            width:228px;
+          }
+        }
+
+        #sidebar li.active {
+          border:0 #eee solid;
+          border-right-width:5px;
+        }
+
+        .thumbnail {
+            display: inline-block;
+            max-width:200px;
+            margin: 10px;
+        }
+
+        .actions {
+          padding: 0 30px 0 30px;
+        }
+    </style>
+  </head>
+  <body class="container">
+    <div id="notice" class="alert-info"></div>
+    <nav class="navbar navbar-default navbar-fixed-top" role="banner">
+  <div class="container">
+    <div class="navbar-header">
+      <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a href="/" class="navbar-brand">Figgy UI Prototype</a>
+    </div>
+  </div>
+</nav>
+
+<div id="masthead">
+  <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h3 id="title"></h3>
+            <p class="lead">File Manager</p>
+          </h1>
+        </div>
+      </div>
+  </div><!--/container-->
+</div><!--/masthead-->
+
+<!--main-->
+<div class="container">
+	<div class="row">
+      <!--left-->
+      <div class="col-md-3" id="leftCol">
+        <div id="sidebar" class="actions form-horizontal panel panel-default">
+          <form class="form-horizontal">
+          <div class="form-group">
+            <label class="control-label" for="label">Label</label>
+            <div>
+              <input type="text" name="label" id="label" value="1" class="form-control">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label" for="pageType">Page Type</label>
+            <select id="pageType" class="form-control">
+              <option>Single Page (Default)</option>
+              <option>Non-Paged</option>
+              <option>Facing Pages</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" value="">
+                Set as Thumbnail <a href="#">(?)</a>
+              </label>
+            </div>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" value="">
+                Set as Start Page <a href="#">(?)</a>
+              </label>
+            </div>
+          </div>
+          <div class="form-group">
+            <button name="button" type="submit" class="btn btn-default" data-action="apply-labels" disabled="">Apply</button>
+            <button name="button" type="submit" class="btn btn-primary disabled" data-action="save-actions">Save</button>
+          </div>
+        </form>
+        </div>
+
+      </div><!--/left-->
+
+      <!--right-->
+      <div class="col-md-9">
+        <div id="sortable" class="col-md-12"></div>
+        </div><!--/right-->
+  	</div><!--/row-->
+</div><!--/container-->
+
+
+    <h3 id="title"></h3>
+    <div class="row">
+      <div class="col-md-3">
+        <h1>Tools</h1>
+      </div>
+      <div id="sortable" class="col-md-8"></div>
+    </div>
+
+    <!-- built files will be auto injected -->
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.min.js"
+      integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+      crossorigin="anonymous"></script>
+    <script
+      src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"
+      integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E="
+      crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  </body>
+</html>
