@@ -1,11 +1,18 @@
 import FileManager from './components/file_manager'
+import img_collection from './data/img_collection'
 
 // use SaveManager to persist data?
 // instantiating this causes my sortable from firing
 // window.fm = new FileManager();
 var manifest = {}
-var img_collection = []
-var selected = {}
+
+var selected = {
+  'id': '',
+  'label': '',
+  'pageType': 'single',
+  'isThumb': null,
+  'isStart': null
+}
 
 // $( document ).on( "foo", function( event ) {
 //   console.log(event)
@@ -161,7 +168,6 @@ $(function() {
 
 var handleSelectPage = function(event) {
     selected = img_collection[event.currentTarget.id]
-    console.log(selected)
     $( '#label' ).val(selected.label)
     $( '#pageType option[value="'+ selected.pageType +'"]' ).prop('selected', true)
     $( '#isThumb' ).prop( "checked", selected.isThumb );
@@ -170,3 +176,18 @@ var handleSelectPage = function(event) {
 };
 
 $( document ).filemanager({selectPage : handleSelectPage});
+
+$( "#save_btn" ).click(function( event ) {
+  console.log(selected)
+  var index = img_collection.map(function(img) {
+    return img.id;
+  }).indexOf(selected.id);
+  img_collection[index] = selected
+  window.img_collection = img_collection
+});
+
+$('#label').on('input',function(e){
+  selected.label = $( '#label' ).val()
+  console.log(selected.label)
+  window.selected = selected
+});

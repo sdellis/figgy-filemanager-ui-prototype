@@ -93,7 +93,7 @@
       <!--left-->
       <div class="col-md-3" id="leftCol">
         <div id="sidebar" class="actions form-horizontal panel panel-default">
-          <form class="form-horizontal">
+          <form id="page_metadata_form" class="form-horizontal">
           <div class="form-group">
             <label class="control-label" for="label">Label</label>
             <div>
@@ -124,8 +124,8 @@
           </div>
           <input id="canvas_id" type="hidden" name="canvas_id">
           <div class="form-group">
-            <button name="button" type="submit" class="btn btn-default" data-action="apply-labels" disabled="">Apply</button>
-            <button name="button" type="submit" class="btn btn-primary disabled" data-action="save-actions">Save</button>
+            <button id="apply_btn" name="button" type="button" class="btn btn-default" data-action="apply-labels">Apply</button>
+            <button id="save_btn" name="button" type="button" class="btn btn-primary" data-action="save-actions">Save</button>
           </div>
         </form>
         </div>
@@ -148,7 +148,7 @@
       integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E="
       crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <script src="https://cdn.rawgit.com/remy/bind/928c52ce335d6fd2c824b536a97efa460554b9e0/dist/bind.min.js"></script>
+    <!-- <script src="https://cdn.rawgit.com/remy/bind/928c52ce335d6fd2c824b536a97efa460554b9e0/dist/bind.min.js"></script> -->
     <!-- built files will be auto injected -->
   </body>
 </html>
