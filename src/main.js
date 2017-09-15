@@ -5,7 +5,7 @@ import FileManager from './components/file_manager'
 // window.fm = new FileManager();
 var manifest = {}
 var img_collection = []
-var selected = []
+var selected = {}
 
 // $( document ).on( "foo", function( event ) {
 //   console.log(event)
@@ -48,6 +48,7 @@ $.widget( "figgy.filemanager", {
               img_collection.push({
                 'id': element["@id"],
                 'label': element.label,
+                'pageType': 'single',
                 'isThumb': null,
                 'isStart': null,
                 'selected': false
@@ -154,13 +155,18 @@ $(function() {
         folder.option( "jsonLd", jsonLd);
         //update the folder with the new sort order
         folder.save();
-        console.log(img_collection)
     }
   });
 });
 
 var handleSelectPage = function(event) {
-    console.log(event);
+    selected = img_collection[event.currentTarget.id]
+    console.log(selected)
+    $( '#label' ).val(selected.label)
+    $( '#pageType option[value="'+ selected.pageType +'"]' ).prop('selected', true)
+    $( '#isThumb' ).prop( "checked", selected.isThumb );
+    $( '#isStart' ).prop( "checked", selected.isStart );
+    $( '#canvas_id' ).val(selected.id);
 };
 
 $( document ).filemanager({selectPage : handleSelectPage});

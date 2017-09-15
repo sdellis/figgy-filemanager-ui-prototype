@@ -103,25 +103,26 @@
           <div class="form-group">
             <label class="control-label" for="pageType">Page Type</label>
             <select id="pageType" class="form-control">
-              <option>Single Page (Default)</option>
-              <option>Non-Paged</option>
-              <option>Facing Pages</option>
+              <option value="single">Single Page (Default)</option>
+              <option value="non-paged">Non-Paged</option>
+              <option value="facing">Facing Pages</option>
             </select>
           </div>
           <div class="form-group">
             <div class="checkbox">
               <label>
-                <input type="checkbox" value="">
+                <input id="isThumb" type="checkbox" value="">
                 Set as Thumbnail <a href="#">(?)</a>
               </label>
             </div>
-            <div class="checkbox">
+            <div id="isStart" class="checkbox">
               <label>
                 <input type="checkbox" value="">
                 Set as Start Page <a href="#">(?)</a>
               </label>
             </div>
           </div>
+          <input id="canvas_id" type="hidden" name="canvas_id">
           <div class="form-group">
             <button name="button" type="submit" class="btn btn-default" data-action="apply-labels" disabled="">Apply</button>
             <button name="button" type="submit" class="btn btn-primary disabled" data-action="save-actions">Save</button>
