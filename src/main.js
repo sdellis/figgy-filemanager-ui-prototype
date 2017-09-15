@@ -6,9 +6,11 @@ import img_collection from './data/img_collection'
 // window.fm = new FileManager();
 var manifest = {}
 
+window.img_collection = img_collection
 var selected = {
   'id': '',
   'label': '',
+  'url': '',
   'pageType': 'single',
   'isThumb': null,
   'isStart': null
@@ -20,7 +22,7 @@ var selected = {
 
 $('#sidebar').affix({
   offset: {
-    top: 235
+    bottom: 235
   }
 });
 
@@ -52,14 +54,15 @@ $.widget( "figgy.filemanager", {
               .html( "<img id='" + element["@id"] + "' src='" +
                     element.images[0].resource["@id"] +
                     "'><div class='caption'>" + element.label + "</div>" );
-              img_collection.push({
-                'id': element["@id"],
-                'label': element.label,
-                'pageType': 'single',
-                'isThumb': null,
-                'isStart': null,
-                'selected': false
-              })
+              // img_collection.push({
+              //   'id': element["@id"],
+              //   'url': element.images[0].resource["@id"],
+              //   'label': element.label,
+              //   'pageType': 'single',
+              //   'isThumb': null,
+              //   'isStart': null,
+              //   'selected': false
+              // })
           }
 
           _this.options.jsonLd = jsonLd;
@@ -173,6 +176,8 @@ var handleSelectPage = function(event) {
     $( '#isThumb' ).prop( "checked", selected.isThumb );
     $( '#isStart' ).prop( "checked", selected.isStart );
     $( '#canvas_id' ).val(selected.id);
+    $( '#detail_img' ).attr("src",selected.url);
+    console.log(selected.url)
 };
 
 $( document ).filemanager({selectPage : handleSelectPage});
