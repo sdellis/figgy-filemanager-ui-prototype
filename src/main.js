@@ -33,11 +33,14 @@ $.widget( "figgy.filemanager", {
         endpoint: "",
         manifestUri: "",
         jsonLd: null,
-        selected: []
+        images: []
     },
     _create: function() {
 
         this.element.addClass( "filemanager" );
+
+        // loop over img_collection here
+        
 
         this.request = jQuery.ajax({
           url: this.options.endpoint + this.options.manifestUri,
@@ -143,6 +146,7 @@ $(function() {
   var folder = $( "<div></div>" )
       .appendTo( "body" )
       .filemanager({
+          images: img_collection,
           endpoint: "https://hydra-dev.princeton.edu/concern/ephemera_folders/",
           manifestUri: "feddf9b7-0935-448a-91d6-eb3ce933bcb5/manifest",
           complete: function( event, data ) {
