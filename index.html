@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>figgy-es6</title>
+    <title>Figgy Filemanager UI Prototype</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <style>
         body {
@@ -25,29 +25,6 @@
           }
         }
 
-        .affix-top,.affix{
-         position: static;
-        }
-
-        @media (min-width: 979px) {
-          #sidebar.affix-top {
-            position: static;
-          	margin-top:30px;
-          	width:228px;
-          }
-
-          #sidebar.affix {
-            position: fixed;
-            top:70px;
-            width:228px;
-          }
-        }
-
-        #sidebar li.active {
-          border:0 #eee solid;
-          border-right-width:5px;
-        }
-
         .thumbnail {
             display: inline-block;
             max-width:200px;
@@ -57,87 +34,155 @@
         .actions {
           padding: 0 30px 0 30px;
         }
+
+        #bottom_pane {
+          position: fixed;
+          left: 15px;
+          bottom: 50px;
+          display: none;
+        }
+
+        .img_gallery {
+          overflow:auto;
+          height:650px;
+          border: 1px solid #ddd;
+          border-radius: 4px;
+          margin-bottom: 30px;
+        }
+
+        #detail {
+          height:79vh;
+          padding: 15px;
+        }
+
+        #detail img {
+          height: 100%;
+        }
+
     </style>
   </head>
-  <body class="container">
-    <div id="notice" class="alert-info"></div>
+  <body class="container-fluid">
     <nav class="navbar navbar-default navbar-fixed-top" role="banner">
-  <div class="container">
-    <div class="navbar-header">
-      <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a href="/" class="navbar-brand">Figgy UI Prototype</a>
-    </div>
-  </div>
-</nav>
-
-<div id="masthead">
-  <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <h3 id="title"></h3>
-            <p class="lead">File Manager</p>
-          </h1>
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="/" class="navbar-brand">Figgy UI Prototype</a>
         </div>
       </div>
-  </div><!--/container-->
-</div><!--/masthead-->
+    </nav>
+
+    <div id="masthead">
+      <div id="notice" class="alert-info"></div>
+      <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <h3 id="title"></h3>
+                <p class="lead">File Manager</p>
+              </h1>
+            </div>
+          </div>
+      </div><!--/container-->
+    </div><!--/masthead-->
 
 <!--main-->
-<div class="container">
+<div class="container-fluid">
 	<div class="row">
-      <!--left-->
-      <div class="col-md-3" id="leftCol">
-        <div id="sidebar" class="actions form-horizontal panel panel-default">
-          <form id="page_metadata_form" class="form-horizontal">
-          <div class="form-group">
-            <label class="control-label" for="label">Label</label>
-            <div>
-              <input type="text" name="label" id="label" value="1" class="form-control">
-            </div>
+    <!--top-left-->
+    <div class="col-md-7">
+      <div class="img_gallery" id="sortable" class="col-md-12"></div>
+      <div class="actions form-horizontal panel panel-default">
+        <form id="page_metadata_form" class="form-horizontal">
+        <div class="form-group">
+          <label class="control-label" for="label">Label</label>
+          <div>
+            <input type="text" name="label" id="label" value="1" class="form-control">
           </div>
-          <div class="form-group">
-            <label class="control-label" for="pageType">Page Type</label>
-            <select id="pageType" class="form-control">
-              <option value="single">Single Page (Default)</option>
-              <option value="non-paged">Non-Paged</option>
-              <option value="facing">Facing Pages</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <div class="checkbox">
-              <label>
-                <input id="isThumb" type="checkbox" value="">
-                Set as Thumbnail <a href="#">(?)</a>
-              </label>
-            </div>
-            <div id="isStart" class="checkbox">
-              <label>
-                <input type="checkbox" value="">
-                Set as Start Page <a href="#">(?)</a>
-              </label>
-            </div>
-          </div>
-          <input id="canvas_id" type="hidden" name="canvas_id">
-          <div class="form-group">
-            <button id="apply_btn" name="button" type="button" class="btn btn-default" data-action="apply-labels">Apply</button>
-            <button id="save_btn" name="button" type="button" class="btn btn-primary" data-action="save-actions">Save</button>
-          </div>
-        </form>
         </div>
+        <div class="form-group">
+          <label class="control-label" for="pageType">Page Type</label>
+          <select id="pageType" class="form-control">
+            <option value="single">Single Page (Default)</option>
+            <option value="non-paged">Non-Paged</option>
+            <option value="facing">Facing Pages</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <div class="checkbox">
+            <label>
+              <input id="isThumb" type="checkbox" value="">
+              Set as Thumbnail <a href="#">(?)</a>
+            </label>
+          </div>
+          <div id="isStart" class="checkbox">
+            <label>
+              <input type="checkbox" value="">
+              Set as Start Page <a href="#">(?)</a>
+            </label>
+          </div>
+        </div>
+        <input id="canvas_id" type="hidden" name="canvas_id">
+        <div class="form-group">
+          <button id="apply_btn" name="button" type="button" class="btn btn-default" data-action="apply-labels">Apply</button>
+          <button id="save_btn" name="button" type="button" class="btn btn-primary" data-action="save-actions">Save</button>
+        </div>
+      </form>
+      </div><!--/bottom-->
+    </div><!--/top-left-->
+    <!--left-->
+    <div class="col-md-5" id="leftCol">
+      <div id="detail" class="actions form-horizontal panel panel-default">
+        <img id="detail_img" src="https://libimages1.princeton.edu/loris/plum/s1%2F54%2F4b%2Fr1%2F2w-intermediate_file.jp2/full/!600,600/0/default.jpg">
+      </div>
+    </div><!--/right-->
 
-      </div><!--/left-->
-
-      <!--right-->
-      <div class="col-md-9">
-        <div id="sortable" class="col-md-12"></div>
-        </div><!--/right-->
-  	</div><!--/row-->
+  </div><!--/row-->
 </div><!--/container-->
+
+<!--bottom-->
+
+  <div id="bottom_pane" class="actions form-horizontal panel panel-default">
+    <form id="page_metadata_form" class="form-horizontal">
+    <div class="form-group">
+      <label class="control-label" for="label">Label</label>
+      <div>
+        <input type="text" name="label" id="label" value="1" class="form-control">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label" for="pageType">Page Type</label>
+      <select id="pageType" class="form-control">
+        <option value="single">Single Page (Default)</option>
+        <option value="non-paged">Non-Paged</option>
+        <option value="facing">Facing Pages</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <div class="checkbox">
+        <label>
+          <input id="isThumb" type="checkbox" value="">
+          Set as Thumbnail <a href="#">(?)</a>
+        </label>
+      </div>
+      <div id="isStart" class="checkbox">
+        <label>
+          <input type="checkbox" value="">
+          Set as Start Page <a href="#">(?)</a>
+        </label>
+      </div>
+    </div>
+    <input id="canvas_id" type="hidden" name="canvas_id">
+    <div class="form-group">
+      <button id="apply_btn" name="button" type="button" class="btn btn-default" data-action="apply-labels">Apply</button>
+      <button id="save_btn" name="button" type="button" class="btn btn-primary" data-action="save-actions">Save</button>
+    </div>
+  </form>
+  </div><!--/bottom-->
+
 
     <script
       src="https://code.jquery.com/jquery-3.2.1.min.js"
@@ -148,7 +193,6 @@
       integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E="
       crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <!-- <script src="https://cdn.rawgit.com/remy/bind/928c52ce335d6fd2c824b536a97efa460554b9e0/dist/bind.min.js"></script> -->
     <!-- built files will be auto injected -->
   </body>
 </html>
