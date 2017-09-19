@@ -1,7 +1,7 @@
 {
-  "name": "figgy-es6",
+  "name": "filemanager-ui",
   "version": "1.0.0",
-  "description": "A Vue.js project",
+  "description": "FileManager UI for Figgy",
   "author": "Shaun Ellis <shaun@sdellis.com>",
   "private": true,
   "scripts": {

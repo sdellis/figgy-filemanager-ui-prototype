@@ -38,13 +38,18 @@
           height: 100%;
         }
 
-
         /* start presentation styles */
         .layout {
            position: relative;
            height:85vh;
            width: 100vw;
          }
+
+         #filemanager {
+            position: relative;
+            height:85vh;
+            width: 100vw;
+          }
 
         .form {
           position: absolute;
@@ -100,58 +105,6 @@
         </div>
       </div>
     </nav>
-
-    <div class="layout">
-      <div class="content">
-        <div class="img_gallery" id="sortable" class="col-md-12"></div>
-      </div>
-      <div class="sidebar">
-        <div id="detail" class="actions form-horizontal panel panel-default">
-          <img id="detail_img" src="https://libimages1.princeton.edu/loris/plum/s1%2F54%2F4b%2Fr1%2F2w-intermediate_file.jp2/full/!600,600/0/default.jpg">
-        </div>
-      </div>
-      <div class="form">
-        <div class="actions form-horizontal panel panel-default">
-          <form id="page_metadata_form" class="form-horizontal">
-          <div class="form-group">
-            <label class="control-label" for="label">Label</label>
-            <div>
-              <input type="text" name="label" id="label" value="1" class="form-control">
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="control-label" for="pageType">Page Type</label>
-            <select id="pageType" class="form-control">
-              <option value="single">Single Page (Default)</option>
-              <option value="non-paged">Non-Paged</option>
-              <option value="facing">Facing Pages</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <div class="checkbox">
-              <label>
-                <input id="isThumb" type="checkbox" value="">
-                Set as Thumbnail <a href="#">(?)</a>
-              </label>
-            </div>
-            <div id="isStart" class="checkbox">
-              <label>
-                <input type="checkbox" value="">
-                Set as Start Page <a href="#">(?)</a>
-              </label>
-            </div>
-          </div>
-          <input id="canvas_id" type="hidden" name="canvas_id">
-          </form>
-        </div>
-      </div>
-      <div class="controls">
-        <div class="form-group">
-          <button id="apply_btn" name="button" type="button" class="btn btn-default" data-action="apply-labels">Apply</button>
-          <button id="save_btn" name="button" type="button" class="btn btn-primary" data-action="save-actions">Save</button>
-        </div>
-      </div>
-    </div>
 
 <div id="filemanager"></div>
 
