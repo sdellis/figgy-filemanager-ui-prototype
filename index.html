@@ -9,22 +9,6 @@
          padding-top:50px;
         }
 
-        #masthead h1 {
-         font-size: 30px;
-         line-height: 1;
-         padding-top:20px;
-        }
-
-        #masthead .well {
-         margin-top:8%;
-        }
-
-        @media screen and (min-width: 768px) {
-          #masthead h1 {
-            font-size: 50px;
-          }
-        }
-
         .thumbnail {
             display: inline-block;
             max-width:200px;
@@ -33,30 +17,76 @@
 
         .actions {
           padding: 0 30px 0 30px;
-        }
-
-        #bottom_pane {
-          position: fixed;
-          left: 15px;
-          bottom: 50px;
-          display: none;
+          height:100%;
+          overflow-y: auto;
         }
 
         .img_gallery {
           overflow:auto;
-          height:650px;
+          height:100%;
           border: 1px solid #ddd;
           border-radius: 4px;
           margin-bottom: 30px;
         }
 
         #detail {
-          height:79vh;
+          height:100%;
           padding: 15px;
         }
 
         #detail img {
           height: 100%;
+        }
+
+        /* start presentation styles */
+        .layout {
+           position: relative;
+           height:85vh;
+           width: 100vw;
+         }
+
+         #filemanager {
+            position: relative;
+            height:85vh;
+            width: 100vw;
+          }
+
+        .form {
+          position: absolute;
+          bottom: 10px;
+          left: 0;
+          height: 25%;
+          width: 60%;
+          border: 1px solid #ddd;
+          border-radius: 4px;
+        }
+
+        .controls {
+          position: absolute;
+          bottom: 10px;
+          right: 10px;
+          height: 25%;
+          width: 38.5%;
+        }
+
+        .content {
+          position: absolute;
+          top: 20px;
+          left: 0;
+          height: 70%;
+          width: 60%;
+          border: 1px solid #ddd;
+          border-radius: 4px;
+        }
+
+        .sidebar {
+          position: absolute;
+          top: 20px;
+          right: 10px;
+          height: 70%;
+          width: 38.5%;
+          border: 1px solid #ddd;
+          border-radius: 4px;
         }
 
     </style>
@@ -76,113 +106,7 @@
       </div>
     </nav>
 
-    <div id="masthead">
-      <div id="notice" class="alert-info"></div>
-      <div class="container-fluid">
-          <div class="row">
-            <div class="col-md-12">
-              <h3 id="title"></h3>
-                <p class="lead">File Manager</p>
-              </h1>
-            </div>
-          </div>
-      </div><!--/container-->
-    </div><!--/masthead-->
-
-<!--main-->
-<div class="container-fluid">
-	<div class="row">
-    <!--top-left-->
-    <div class="col-md-7">
-      <div class="img_gallery" id="sortable" class="col-md-12"></div>
-      <div class="actions form-horizontal panel panel-default">
-        <form id="page_metadata_form" class="form-horizontal">
-        <div class="form-group">
-          <label class="control-label" for="label">Label</label>
-          <div>
-            <input type="text" name="label" id="label" value="1" class="form-control">
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="control-label" for="pageType">Page Type</label>
-          <select id="pageType" class="form-control">
-            <option value="single">Single Page (Default)</option>
-            <option value="non-paged">Non-Paged</option>
-            <option value="facing">Facing Pages</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <div class="checkbox">
-            <label>
-              <input id="isThumb" type="checkbox" value="">
-              Set as Thumbnail <a href="#">(?)</a>
-            </label>
-          </div>
-          <div id="isStart" class="checkbox">
-            <label>
-              <input type="checkbox" value="">
-              Set as Start Page <a href="#">(?)</a>
-            </label>
-          </div>
-        </div>
-        <input id="canvas_id" type="hidden" name="canvas_id">
-        <div class="form-group">
-          <button id="apply_btn" name="button" type="button" class="btn btn-default" data-action="apply-labels">Apply</button>
-          <button id="save_btn" name="button" type="button" class="btn btn-primary" data-action="save-actions">Save</button>
-        </div>
-      </form>
-      </div><!--/bottom-->
-    </div><!--/top-left-->
-    <!--left-->
-    <div class="col-md-5" id="leftCol">
-      <div id="detail" class="actions form-horizontal panel panel-default">
-        <img id="detail_img" src="https://libimages1.princeton.edu/loris/plum/s1%2F54%2F4b%2Fr1%2F2w-intermediate_file.jp2/full/!600,600/0/default.jpg">
-      </div>
-    </div><!--/right-->
-
-  </div><!--/row-->
-</div><!--/container-->
-
-<!--bottom-->
-
-  <div id="bottom_pane" class="actions form-horizontal panel panel-default">
-    <form id="page_metadata_form" class="form-horizontal">
-    <div class="form-group">
-      <label class="control-label" for="label">Label</label>
-      <div>
-        <input type="text" name="label" id="label" value="1" class="form-control">
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="control-label" for="pageType">Page Type</label>
-      <select id="pageType" class="form-control">
-        <option value="single">Single Page (Default)</option>
-        <option value="non-paged">Non-Paged</option>
-        <option value="facing">Facing Pages</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <div class="checkbox">
-        <label>
-          <input id="isThumb" type="checkbox" value="">
-          Set as Thumbnail <a href="#">(?)</a>
-        </label>
-      </div>
-      <div id="isStart" class="checkbox">
-        <label>
-          <input type="checkbox" value="">
-          Set as Start Page <a href="#">(?)</a>
-        </label>
-      </div>
-    </div>
-    <input id="canvas_id" type="hidden" name="canvas_id">
-    <div class="form-group">
-      <button id="apply_btn" name="button" type="button" class="btn btn-default" data-action="apply-labels">Apply</button>
-      <button id="save_btn" name="button" type="button" class="btn btn-primary" data-action="save-actions">Save</button>
-    </div>
-  </form>
-  </div><!--/bottom-->
-
+<div id="filemanager"></div>
 
     <script
       src="https://code.jquery.com/jquery-3.2.1.min.js"

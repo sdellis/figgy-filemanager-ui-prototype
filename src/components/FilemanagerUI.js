@@ -1,9 +1,6 @@
 export default (function ( $, window, document, undefined ) {
 $.widget( "figgy.filemanager", {
     options: {
-        endpoint: "",
-        manifestUri: "",
-        jsonLd: null,
         images: [],
         selected: {
           'id': '',
@@ -16,10 +13,10 @@ $.widget( "figgy.filemanager", {
     },
     _create: function() {
 
-        this.element.addClass( "filemanager" )
-
-        // paint the img_collection here
-        this.refresh()
+        this.createGallery()
+        this.createDetailSidebar()
+        this.createForm()
+        this.createControls()
 
         var _this = this;
 
@@ -43,23 +40,73 @@ $.widget( "figgy.filemanager", {
   				}
         });
 
-        // Probably don't need to refresh labels until after save
-        // but just in case...
-        // $('#label').on('input',function(e){
-        //   selected.label = $( '#label' ).val()
-        //   console.log(selected.label)
-        //   window.selected = selected
-        // });
-
         // Note: this relies on jQuery UI Sortable widget
         // Since jQuery UI is a dependency, we can lean on it
         // and look into optimizing with HTML5 native DnD if needed
-        $( "#sortable" ).sortable({
+        this.element.find( "#sortable" ).sortable({
           update: function( event, ui ) {
             var sortedIDs = $( "#sortable" ).sortable( "toArray" );
             _this._saveSort(sortedIDs);
           }
         });
+
+        // paint the img_collection here
+        this.refresh()
+    },
+    createGallery: function() {
+      var $content = $('<div class="content"></div>')
+      var $gallery = $('<div class="img_gallery" id="sortable" class="col-md-12"></div>')
+      $content.append( $gallery )
+      this.element.append( $content )
+    },
+    createDetailSidebar: function() {
+      var $sidebar = $('<div class="sidebar"></div>')
+      var $detail = $('<div id="detail" class="actions"></div>')
+      var $img_detail = $('<img id="detail_img" src=""></img>')
+      $detail.append( $img_detail )
+      $sidebar.append( $detail )
+      this.element.append( $sidebar )
+    },
+    createForm: function() {
+      var $form = $('<div class="form actions"></div>')
+
+      var markup = '<form id="page_metadata_form" class="form-horizontal">'+
+                   '<div class="form-group">' +
+                      '<label class="control-label" for="label">Label</label>' +
+                      '<input type="text" name="label" id="label" value="1" class="form-control">' +
+                   '</div>' +
+                   '<div class="form-group">' +
+                   '<label class="control-label" for="pageType">Page Type</label>' +
+                      '<select id="pageType" class="form-control">' +
+                      '<option value="single">Single Page (Default)</option>' +
+                      '<option value="non-paged">Non-Paged</option>' +
+                      '<option value="facing">Facing Pages</option>' +
+                    '</select>' +
+                  '</div>' +
+                  '<div class="form-group">' +
+                    '<div class="checkbox">' +
+                      '<label>' +
+                        '<input id="isThumb" type="checkbox" value="">' +
+                        'Set as Thumbnail <a href="#">(?)</a>' +
+                      '</label>' +
+                  '</div>' +
+                    '<div class="checkbox">' +
+                      '<label>' +
+                        '<input id="isStart" type="checkbox" value="">' +
+                        'Set as Start Page <a href="#">(?)</a>' +
+                      '</label>' +
+                    '</div>' +
+                  '</div>' +
+                  '<input id="canvas_id" type="hidden" name="canvas_id"></form>'
+
+      $form.append( markup )
+      this.element.append( $form )
+    },
+    createControls: function() {
+      var $controls = $('<div class="controls"></div>')
+      var $button = $('<button id="save_btn" name="button" type="button" class="btn btn-primary">Save</button>')
+      $controls.append( $button )
+      this.element.append( $controls )
     },
     getImageIndexById: function( id ) {
       var elementPos = this.options.images.map(function(image) {
