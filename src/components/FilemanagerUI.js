@@ -1,9 +1,6 @@
 export default (function ( $, window, document, undefined ) {
 $.widget( "figgy.filemanager", {
     options: {
-        endpoint: "",
-        manifestUri: "",
-        jsonLd: null,
         images: [],
         selected: {
           'id': '',
@@ -16,7 +13,13 @@ $.widget( "figgy.filemanager", {
     },
     _create: function() {
 
-        this.element.addClass( "filemanager" )
+        this.element.addClass( 'filemanager container-fluid' )
+        //this.element.append( '<div class="row">' );
+        var $row = $('<div class="row"></div>')
+        //$img_gallery =
+        var $md_form = $('<div class="actions form-horizontal panel panel-default"></div>');
+        $row.append( $md_form );
+        this.element.append( $row );
 
         // paint the img_collection here
         this.refresh()

@@ -10,12 +10,15 @@ $('#sidebar').affix({
 var navHeight = $('.navbar').outerHeight(true) + 10;
 
 $(function() {
+
+  $("#filemanager").filemanager({ images: img_collection })
+
   // draw plugin to dom >>>
-  var folder = $( "<div></div>" )
-      .appendTo( "body" )
-      .filemanager({
-          images: img_collection
-      })
+  // var folder = $( "<div></div>" )
+  //     .appendTo( "body" )
+  //     .filemanager({
+  //         images: img_collection
+  //     })
 
   // listen for the objectSaved event to catch and persist the data
   $( "body" ).on( "objectSaved", function( event, img_collection ) {
